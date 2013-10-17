@@ -1,0 +1,7 @@
+timeout 60
+
+default 0
+
+title Solaris
+kernel /tftpboot/platform/i86pc/kernel/amd64/unix -B install_media=http://<%= @ipaddress %>/solaris
+module /tftpboot/platform/i86pc/amd64/boot_archive
