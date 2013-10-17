@@ -6,18 +6,24 @@ class pxe {
     require => Package["dnsmasq"]
   }
 
+  service { "nginx":
+    ensure  => "running",
+    enable  => "true",
+    require => Package["nginx"]
+  }
+
   package { "ipxe":
     ensure => "installed"
   }
-  ->
+
   package { "nginx":
     ensure => "installed"
   }
-  ->
+
   package { "dnsmasq":
     ensure => "installed"
   }
-  ->
+
   file { ["/tftpboot"]:
     ensure => "directory",
     owner  => 'root',
@@ -30,6 +36,7 @@ class pxe {
     creates => "/tftpboot/undionly.kpxe"
   }
   -> file { "/etc/dnsmasq.conf":
+    require => Package["dnsmasq"],
     notify => Service["dnsmasq"],
     ensure => 'present',
     owner => 'root',
@@ -44,13 +51,5 @@ class pxe {
     group => 'root',
     mode  => '0644',
     content => template("pxe/bootstrap.ipxe")
-  }
-  ->
-  file { "/usr/share/nginx/www/menu.ipxe":
-    ensure => 'present',
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
-    content => template("pxe/menu.ipxe")
   }
 }
