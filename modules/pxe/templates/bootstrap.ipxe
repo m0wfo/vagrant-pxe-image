@@ -1,0 +1,7 @@
+#!ipxe
+
+kernel http://ftp.nl.debian.org/debian/dists/wheezy/main/installer-amd64/current/images/cdrom/vmlinuz
+initrd http://ftp.nl.debian.org/debian/dists/wheezy/main/installer-amd64/current/images/cdrom/initrd.gz
+boot
+
+# TODO
